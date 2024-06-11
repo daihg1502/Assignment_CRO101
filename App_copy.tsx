@@ -1,23 +1,27 @@
-import { Button, Image, StyleSheet, View } from 'react-native';
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
-import HomeScreen from './src/views/HomeScreen';
-import Splash from './src/views/Splash';
-import LoginScreen from './src/views/LoginScreen';
-import Register from './src/views/Register';
-import DescriptionScreen from './src/views/DescriptionScreen';
-import CartScreen from './src/views/CartScreen';
-import FavoritesScreen from './src/views/FavoritesScreen';
-import ContactScreen from './src/views/ContactScreen';
-import Payment from './src/views/Payment';
+import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native'
+import * as React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { DrawerItem, createDrawerNavigator } from '@react-navigation/drawer'
+import HomeScreen from './src/views/HomeScreen'
+import Splash from './src/views/Splash'
+import LoginScreen from './src/views/LoginScreen'
+import Register from './src/views/Register'
+import DescriptionScreen from './src/views/DescriptionScreen'
+import CartScreen from './src/views/CartScreen'
+import FavoritesScreen from './src/views/FavoritesScreen'
+import ContactScreen from './src/views/ContactScreen'
 
-// Tạo các navigator
+import {
+  DrawerContentScrollView,
+  DrawerItemList,
+} from '@react-navigation/drawer';
+
+
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
-// Stack Navigator
+// Định nghĩa Stack Navigator
 const StackNavigator = () => {
   return (
     <Stack.Navigator initialRouteName='Splash'>
@@ -65,39 +69,37 @@ const StackNavigator = () => {
         component={CartScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name='Pay'
-        component={Payment}
-        options={{ headerShown: false }}
-      />
     </Stack.Navigator>
   )
 }
 
-// Header cho menu
+// Tạo hàm header cho menu
 const MyHeader = () => {
-  return (
-    <View style={{ height: 150, width: '100%', justifyContent: 'center' }}>
-      <Image source={require('./src/img/logo_fpoly.png')} style={{ width: 210, height: 70, resizeMode: 'center', alignSelf: 'center' }} />
-      <View style={{ width: '90%', height: 1, alignSelf: 'center', backgroundColor: 'black', bottom: 0, position: 'absolute' }}></View>
-    </View>
-  )
+  return (<View style={{ height: 150, width: '100%', justifyContent: 'center' }}>
+    <Image source={require('./src/img/logo_fpoly.png')} style={{ width: 210, height: 70, resizeMode: 'center', alignSelf: 'center' }} />
+    <View style={{ width: '90%', height: 1, alignSelf: 'center', backgroundColor: 'black', bottom: 0, position: 'absolute' }}></View>
+  </View>)
 }
 
-// Nội dung menu tùy chỉnh
+
+// Tạo hàm tùy chỉnh nội dung menu
 const CustomDrawerContent = (props) => {
   return (
     <DrawerContentScrollView {...props}>
       <MyHeader />
       <DrawerItemList {...props} />
       <DrawerItem label="Đăng Xuất" onPress={() => {
-        props.navigation.replace('Login') // Đăng xuất và chuyển đến màn hình đăng nhập
+        Alert.alert('Bạn click vào Đăng xuất')
+        props.navigation.closeDrawer();
       }} />
     </DrawerContentScrollView>
+
+
   );
 }
 
-// Drawer Navigator
+
+// Định nghĩa Drawer Navigator và nhúng Stack Navigator vào
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator initialRouteName='Home' drawerContent={(props) => <CustomDrawerContent {...props} />}>
@@ -109,7 +111,6 @@ const DrawerNavigator = () => {
   )
 }
 
-// App
 const App = () => {
   return (
     <NavigationContainer>
@@ -118,6 +119,6 @@ const App = () => {
   )
 }
 
-export default App;
+export default App
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({})
